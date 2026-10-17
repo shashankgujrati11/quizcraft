@@ -1,8 +1,162 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Conductor Login | QuizCraft</title><link rel="stylesheet" href="style.css"></head>
-<body><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">Q</span> QuizCraft</a><a class="back-link" href="index.html">← All portals</a></header>
-<main class="auth-layout conductor-layout"><section class="auth-aside conductor-aside"><span class="eyebrow">CONDUCTOR PORTAL</span><h1>Host it.<br>Share it.<br><span>See the results.</span></h1><p>Build a private quiz for your students, share one access code or QR link, and review every submitted score.</p><div class="aside-points"><span>✓ Custom questions and answer keys</span><span>✓ Private code and QR sharing</span><span>✓ Scoreboard sorted by score and time</span></div><div class="aside-decoration">✦</div></section>
-<section class="auth-main"><div class="auth-card"><span class="eyebrow">QUIZ CONDUCTOR</span><h2 id="conductorHeading">Sign in to manage quizzes</h2><p class="muted" id="conductorSubheading">Create a local demo account or sign in to an existing one in this browser.</p>
-<div class="auth-tabs"><button type="button" class="auth-tab active" data-mode="login">Sign in</button><button type="button" class="auth-tab" data-mode="register">Create account</button></div>
-<form id="conductorAuthForm"><label for="conductorEmail">Email or username</label><input id="conductorEmail" required maxlength="80" placeholder="conductor@example.com" autocomplete="username"><label for="conductorPassword">Password</label><input id="conductorPassword" type="password" required minlength="4" maxlength="100" placeholder="Enter password" autocomplete="current-password"><button class="btn primary full" id="conductorSubmit" type="submit">Sign in <span>→</span></button></form><div id="conductorMessage" class="message" aria-live="polite"></div><div id="conductorDashboard" class="conductor-dashboard hidden"></div><p class="auth-switch">Joining a quiz? <a href="student.html">Student login</a></p><p class="security-note">Demo mode: this account is stored only in this browser and is not secure authentication for a public deployment.</p></div></section></main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="config.js"></script><script src="app.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conductor Login | QuizCraft</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html">
+            <span class="brand-mark">Q</span>
+            QuizCraft
+        </a>
+
+        <a class="back-link" href="index.html">
+            &larr; All portals
+        </a>
+    </header>
+
+    <main class="auth-layout conductor-layout">
+
+        <!-- Conductor portal introduction -->
+        <section class="auth-aside conductor-aside">
+            <span class="eyebrow">CONDUCTOR PORTAL</span>
+
+            <h1>
+                Host it.<br>
+                Share it.<br>
+                <span>See the results.</span>
+            </h1>
+
+            <p>
+                Build a private quiz for your students, share one access
+                code or QR link, and review every submitted score.
+            </p>
+
+            <div class="aside-points">
+                <span>✓ Custom questions and answer keys</span>
+                <span>✓ Private code and QR sharing</span>
+                <span>✓ Scoreboard sorted by score and time</span>
+            </div>
+
+            <div class="aside-decoration" aria-hidden="true">
+                ✦
+            </div>
+        </section>
+
+        <!-- Authentication section -->
+        <section class="auth-main">
+            <div class="auth-card">
+                <span class="eyebrow">QUIZ CONDUCTOR</span>
+
+                <h2 id="conductorHeading">
+                    Sign in to manage quizzes
+                </h2>
+
+                <p class="muted" id="conductorSubheading">
+                    Create a local demo account or sign in to an existing
+                    one in this browser.
+                </p>
+
+                <!-- Login and registration tabs -->
+                <div class="auth-tabs">
+                    <button
+                        type="button"
+                        class="auth-tab active"
+                        data-mode="login"
+                    >
+                        Sign in
+                    </button>
+
+                    <button
+                        type="button"
+                        class="auth-tab"
+                        data-mode="register"
+                    >
+                        Create account
+                    </button>
+                </div>
+
+                <!-- Authentication form -->
+                <form id="conductorAuthForm">
+                    <label for="conductorEmail">
+                        Email or username
+                    </label>
+
+                    <input
+                        id="conductorEmail"
+                        name="username"
+                        type="text"
+                        required
+                        maxlength="80"
+                        placeholder="conductor@example.com"
+                        autocomplete="username"
+                    >
+
+                    <label for="conductorPassword">
+                        Password
+                    </label>
+
+                    <input
+                        id="conductorPassword"
+                        name="password"
+                        type="password"
+                        required
+                        minlength="4"
+                        maxlength="100"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                    >
+
+                    <button
+                        class="btn primary full"
+                        id="conductorSubmit"
+                        type="submit"
+                    >
+                        Sign in <span aria-hidden="true">→</span>
+                    </button>
+                </form>
+
+                <!-- Status messages -->
+                <div
+                    id="conductorMessage"
+                    class="message"
+                    aria-live="polite"
+                    role="status"
+                ></div>
+
+                <!-- Dashboard content -->
+                <div
+                    id="conductorDashboard"
+                    class="conductor-dashboard hidden"
+                ></div>
+
+                <p class="auth-switch">
+                    Joining a quiz?
+                    <a href="student.html">Student login</a>
+                </p>
+
+                <p class="security-note">
+                    Demo mode: this account is stored only in this browser
+                    and is not secure authentication for a public deployment.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- External libraries and application scripts -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    ></script>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
