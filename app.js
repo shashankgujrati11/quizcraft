@@ -128,7 +128,7 @@ function initConductor() {
   });
   const token = localStorage.getItem(TOKEN_KEY);
   if (token) api('/api/auth/me', {}, true).then(data => showDashboard(data.user.email)).catch(() => localStorage.removeItem(TOKEN_KEY));
-  if (!apiConfigured()) setMessage('#conductorMessage', 'Setup required: edit config.js with your deployed backend URL before creating accounts.', true);
+ 
 }
 function setAuthMode(mode) {
   authMode = mode;
