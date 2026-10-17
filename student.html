@@ -1,8 +1,138 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student Login | QuizCraft</title><link rel="stylesheet" href="style.css"></head>
-<body><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">Q</span> QuizCraft</a><a class="back-link" href="index.html">← All portals</a></header>
-<main class="auth-layout"><section class="auth-aside student-aside"><span class="eyebrow">STUDENT PORTAL</span><h1>Your challenge<br>starts here.</h1><p>Use the private access code your quiz conductor gave you. If you scanned their QR code, the code will be filled in automatically.</p><div class="aside-points"><span>✓ Private quiz access</span><span>✓ Score and rank after submitting</span><span>✓ Clear progress through each question</span></div><div class="aside-decoration">Q.</div></section>
-<section class="auth-main"><div class="auth-card"><span class="eyebrow">WELCOME, STUDENT</span><h2>Join your quiz</h2><p class="muted">Enter your name and the access code to continue.</p>
-<form id="studentLoginForm"><label for="studentName">Your name</label><input id="studentName" maxlength="40" placeholder="e.g. Aanya Sharma" required autocomplete="name"><label for="quizCode">Private quiz code</label><input id="quizCode" maxlength="16" placeholder="e.g. 7KQ9PX" required autocapitalize="characters" autocomplete="off"><button class="btn primary full" type="submit">Find my quiz <span>→</span></button></form>
-<div id="studentLoginMessage" class="message" aria-live="polite"></div><div id="studentQuizPanel" class="student-quiz-panel hidden"></div><p class="auth-switch">Conducting a quiz? <a href="conductor.html">Conductor login</a></p></div></section></main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="config.js"></script><script src="app.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Login | QuizCraft</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="topbar">
+        <a class="brand" href="index.html">
+            <span class="brand-mark">Q</span>
+            QuizCraft
+        </a>
+
+        <a class="back-link" href="index.html">
+            &larr; All portals
+        </a>
+    </header>
+
+    <!-- Main authentication layout -->
+    <main class="auth-layout">
+
+        <!-- Student portal introduction -->
+        <section class="auth-aside student-aside">
+            <span class="eyebrow">STUDENT PORTAL</span>
+
+            <h1>
+                Your challenge<br>
+                starts here.
+            </h1>
+
+            <p>
+                Use the private access code your quiz conductor gave you.
+                If you scanned their QR code, the code will be filled in
+                automatically.
+            </p>
+
+            <div class="aside-points">
+                <span>✓ Private quiz access</span>
+                <span>✓ Score and rank after submitting</span>
+                <span>✓ Clear progress through each question</span>
+            </div>
+
+            <div class="aside-decoration" aria-hidden="true">
+                Q.
+            </div>
+        </section>
+
+        <!-- Student login form -->
+        <section class="auth-main">
+            <div class="auth-card">
+                <span class="eyebrow">WELCOME, STUDENT</span>
+
+                <h2>Join your quiz</h2>
+
+                <p class="muted">
+                    Enter your name and the access code to continue.
+                </p>
+
+                <form id="studentLoginForm">
+
+                    <label for="studentName">
+                        Your name
+                    </label>
+
+                    <input
+                        id="studentName"
+                        name="studentName"
+                        type="text"
+                        maxlength="40"
+                        placeholder="e.g. Aanya Sharma"
+                        required
+                        autocomplete="name"
+                    >
+
+                    <label for="quizCode">
+                        Private quiz code
+                    </label>
+
+                    <input
+                        id="quizCode"
+                        name="quizCode"
+                        type="text"
+                        maxlength="16"
+                        placeholder="e.g. 7KQ9PX"
+                        required
+                        autocapitalize="characters"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+
+                    <button class="btn primary full" type="submit">
+                        Find my quiz <span aria-hidden="true">→</span>
+                    </button>
+
+                </form>
+
+                <!-- Login feedback -->
+                <div
+                    id="studentLoginMessage"
+                    class="message"
+                    aria-live="polite"
+                    role="status"
+                ></div>
+
+                <!-- Quiz information and access panel -->
+                <div
+                    id="studentQuizPanel"
+                    class="student-quiz-panel hidden"
+                ></div>
+
+                <!-- Navigation to conductor portal -->
+                <p class="auth-switch">
+                    Conducting a quiz?
+                    <a href="conductor.html">Conductor login</a>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- External libraries and application scripts -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    ></script>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
