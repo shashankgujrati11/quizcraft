@@ -10,6 +10,8 @@ const crypto = require('crypto');
 const { Resend } = require('resend');
 
 const app = express();
+app.set("trust proxy", 1);
+
 const PORT = Number(process.env.PORT || 3000);
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 const OTP_FROM = process.env.RESEND_FROM || 'QuizCraft <onboarding@resend.dev>';
