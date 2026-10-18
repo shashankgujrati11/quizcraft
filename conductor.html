@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Conductor Login | QuizCraft</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,13 +16,11 @@
         </a>
 
         <a class="back-link" href="index.html">
-            &larr; All portals
+            ← All portals
         </a>
     </header>
 
     <main class="auth-layout conductor-layout">
-
-        <!-- Conductor portal introduction -->
         <section class="auth-aside conductor-aside">
             <span class="eyebrow">CONDUCTOR PORTAL</span>
 
@@ -45,12 +41,9 @@
                 <span>✓ Scoreboard sorted by score and time</span>
             </div>
 
-            <div class="aside-decoration" aria-hidden="true">
-                ✦
-            </div>
+            <div class="aside-decoration">✦</div>
         </section>
 
-        <!-- Authentication section -->
         <section class="auth-main">
             <div class="auth-card">
                 <span class="eyebrow">QUIZ CONDUCTOR</span>
@@ -60,11 +53,11 @@
                 </h2>
 
                 <p class="muted" id="conductorSubheading">
-                    Create a local demo account or sign in to an existing
-                    one in this browser.
+                    Create an account or sign in with email verification.
+                    A one-time code is required for signup and every
+                    password login.
                 </p>
 
-                <!-- Login and registration tabs -->
                 <div class="auth-tabs">
                     <button
                         type="button"
@@ -83,7 +76,6 @@
                     </button>
                 </div>
 
-                <!-- Authentication form -->
                 <form id="conductorAuthForm">
                     <label for="conductorEmail">
                         Email or username
@@ -91,8 +83,8 @@
 
                     <input
                         id="conductorEmail"
-                        name="username"
-                        type="text"
+                        type="email"
+                        name="email"
                         required
                         maxlength="80"
                         placeholder="conductor@example.com"
@@ -105,8 +97,8 @@
 
                     <input
                         id="conductorPassword"
-                        name="password"
                         type="password"
+                        name="password"
                         required
                         minlength="4"
                         maxlength="100"
@@ -119,19 +111,64 @@
                         id="conductorSubmit"
                         type="submit"
                     >
-                        Sign in <span aria-hidden="true">→</span>
+                        Sign in <span>→</span>
                     </button>
                 </form>
 
-                <!-- Status messages -->
+                <form id="conductorOtpForm" class="hidden">
+                    <p class="muted" id="conductorOtpHint">
+                        Enter the 6-digit code sent to your email.
+                        The code expires in 5 minutes.
+                    </p>
+
+                    <label for="conductorOtp">
+                        Email verification code
+                    </label>
+
+                    <input
+                        id="conductorOtp"
+                        name="otp"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        minlength="6"
+                        required
+                        placeholder="123456"
+                    >
+
+                    <button
+                        class="btn primary full"
+                        id="conductorVerifyOtp"
+                        type="submit"
+                    >
+                        Verify email <span>→</span>
+                    </button>
+
+                    <button
+                        class="btn secondary full"
+                        id="conductorResendOtp"
+                        type="button"
+                    >
+                        Resend code
+                    </button>
+
+                    <button
+                        class="btn ghost full"
+                        id="conductorCancelOtp"
+                        type="button"
+                    >
+                        Back to sign in
+                    </button>
+                </form>
+
                 <div
                     id="conductorMessage"
                     class="message"
                     aria-live="polite"
-                    role="status"
                 ></div>
 
-                <!-- Dashboard content -->
                 <div
                     id="conductorDashboard"
                     class="conductor-dashboard hidden"
@@ -143,19 +180,14 @@
                 </p>
 
                 <p class="security-note">
-                    Demo mode: this account is stored only in this browser
-                    and is not secure authentication for a public deployment.
+                    Email verification is required for account creation
+                    and every password login.
                 </p>
             </div>
         </section>
-
     </main>
 
-    <!-- External libraries and application scripts -->
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
-    ></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="config.js"></script>
     <script src="app.js"></script>
 </body>
