@@ -107,6 +107,8 @@ async function finishStudentQuiz() {
   }
 }
 
+let pendingOtpEmail = '';
+let pendingOtpPurpose = '';
 function initConductor() {
   const form = $('#conductorAuthForm');
   if (!form) return;
@@ -117,18 +119,62 @@ function initConductor() {
     const email = $('#conductorEmail').value.trim().toLowerCase();
     const password = $('#conductorPassword').value;
     const endpoint = authMode === 'register' ? '/api/auth/register' : '/api/auth/login';
-    setBusy(button, true, authMode === 'register' ? 'Creating account…' : 'Signing in…');
+    setBusy(button, true, authMode === 'register' ? 'Creating account…' : 'Checking credentials…');
     try {
       const data = await api(endpoint, { method: 'POST', body: JSON.stringify({ email, password }) });
+      if (data.otpRequired) {
+        pendingOtpEmail = data.email || email;
+        pendingOtpPurpose = data.purpose || authMode;
+        form.classList.add('hidden');
+        $('#conductorOtpForm').classList.remove('hidden');
+        $$('.auth-tab').forEach(tab => tab.classList.add('hidden'));
+        $('#conductorOtpHint').textContent = data.message || `Enter the 6-digit code sent to ${pendingOtpEmail}. It expires in 5 minutes.`;
+        $('#conductorHeading').textContent = pendingOtpPurpose === 'signup' ? 'Verify your email' : 'Verify it’s you';
+        $('#conductorSubheading').textContent = pendingOtpEmail;
+        $('#conductorOtp').focus();
+        setMessage('#conductorMessage', data.message || 'Verification code sent.');
+      } else {
+        throw new Error('The server did not request OTP verification. Redeploy the updated backend.');
+      }
+    } catch (err) { setMessage('#conductorMessage', err.message, true); }
+    finally { setBusy(button, false); }
+  });
+  $('#conductorOtpForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const button = $('#conductorVerifyOtp');
+    const otp = $('#conductorOtp').value.trim();
+    setBusy(button, true, 'Verifying…');
+    try {
+      const data = await api('/api/auth/verify-otp', { method: 'POST', body: JSON.stringify({ email: pendingOtpEmail, purpose: pendingOtpPurpose, otp }) });
       localStorage.setItem(TOKEN_KEY, data.token);
-      setMessage('#conductorMessage', authMode === 'register' ? 'Account created successfully.' : 'Signed in successfully.');
+      pendingOtpEmail = ''; pendingOtpPurpose = '';
+      setMessage('#conductorMessage', 'Email verified. Signed in successfully.');
+      $('#conductorOtpForm').classList.add('hidden');
       await showDashboard(data.user.email);
     } catch (err) { setMessage('#conductorMessage', err.message, true); }
     finally { setBusy(button, false); }
   });
+  $('#conductorResendOtp').addEventListener('click', async () => {
+    const button = $('#conductorResendOtp');
+    setBusy(button, true, 'Sending…');
+    try {
+      const data = await api('/api/auth/resend-otp', { method: 'POST', body: JSON.stringify({ email: pendingOtpEmail, purpose: pendingOtpPurpose }) });
+      setMessage('#conductorMessage', data.message || 'A new code has been sent.');
+    } catch (err) { setMessage('#conductorMessage', err.message, true); }
+    finally { setBusy(button, false); }
+  });
+  $('#conductorCancelOtp').addEventListener('click', () => {
+    pendingOtpEmail = ''; pendingOtpPurpose = '';
+    $('#conductorOtpForm').classList.add('hidden');
+    form.classList.remove('hidden');
+    $$('.auth-tab').forEach(tab => tab.classList.remove('hidden'));
+    setAuthMode('login');
+    $('#conductorPassword').value = '';
+    setMessage('#conductorMessage', 'Enter your credentials to continue.');
+  });
   const token = localStorage.getItem(TOKEN_KEY);
   if (token) api('/api/auth/me', {}, true).then(data => showDashboard(data.user.email)).catch(() => localStorage.removeItem(TOKEN_KEY));
- 
+  if (!apiConfigured()) setMessage('#conductorMessage', 'Setup required: edit config.js with your deployed backend URL before creating accounts.', true);
 }
 function setAuthMode(mode) {
   authMode = mode;
@@ -141,6 +187,7 @@ function setAuthMode(mode) {
 }
 async function showDashboard(email) {
   $('#conductorAuthForm').classList.add('hidden');
+  $('#conductorOtpForm').classList.add('hidden');
   $$('.auth-tab').forEach(t => t.classList.add('hidden'));
   $('#conductorHeading').textContent = 'Your quiz studio';
   $('#conductorSubheading').textContent = `Signed in as ${email}`;
